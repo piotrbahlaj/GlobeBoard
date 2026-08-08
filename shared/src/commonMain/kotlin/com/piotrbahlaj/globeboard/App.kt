@@ -7,6 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.piotrbahlaj.globeboard.core.navigation.Routes
+import com.piotrbahlaj.globeboard.features.explorer.presentation.ui.ExplorerListScreen
 
 @Composable
 fun App() {
@@ -21,7 +22,11 @@ fun App() {
                 // DashboardScreen
             }
             composable<Routes.ExplorerList> {
-                // ExplorerListScreen
+                 ExplorerListScreen(
+                     onCountryClick = { isoCode ->
+                         navController.navigate(Routes.CountryDetail(isoCode))
+                     }
+                 )
             }
             composable<Routes.CountryDetail> { backStackEntry ->
                 val args: Routes.CountryDetail = backStackEntry.toRoute()
