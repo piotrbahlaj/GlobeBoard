@@ -1,47 +1,41 @@
 package com.piotrbahlaj.globeboard
 
-import androidx.compose.animation.AnimatedVisibility
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.safeContentPadding
-import androidx.compose.material3.Button
+import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Text
-import androidx.compose.runtime.*
-import androidx.compose.ui.Alignment
+import androidx.compose.material3.Scaffold
+import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.tooling.preview.Preview
-import org.jetbrains.compose.resources.painterResource
-
-import globeboard.shared.generated.resources.Res
-import globeboard.shared.generated.resources.compose_multiplatform
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
+import com.piotrbahlaj.globeboard.core.navigation.Routes
+import com.piotrbahlaj.globeboard.features.explorer.presentation.ExplorerListScreen
 
 @Composable
-@Preview
 fun App() {
     MaterialTheme {
-        var showContent by remember { mutableStateOf(false) }
-        Column(
-            modifier = Modifier
-                .background(MaterialTheme.colorScheme.primaryContainer)
-                .safeContentPadding()
-                .fillMaxSize(),
-            horizontalAlignment = Alignment.CenterHorizontally,
-        ) {
-            Button(onClick = { showContent = !showContent }) {
-                Text("Click me!")
-            }
-            AnimatedVisibility(showContent) {
-                val greeting = remember { Greeting().greet() }
-                Column(
-                    modifier = Modifier.fillMaxWidth(),
-                    horizontalAlignment = Alignment.CenterHorizontally,
-                ) {
-                    Image(painterResource(Res.drawable.compose_multiplatform), null)
-                    Text("Compose: $greeting")
+        val navController = rememberNavController()
+
+        Scaffold { innerPadding ->
+            NavHost(
+                navController = navController,
+                startDestination = Routes.ExplorerList,
+                modifier = Modifier.padding(innerPadding)
+            ) {
+                composable<Routes.Dashboard> {
+                    // DashboardScreen
+                }
+                composable<Routes.ExplorerList> {
+                    ExplorerListScreen(
+                        onCountryClick = { isoCode ->
+                            navController.navigate(Routes.CountryDetail(isoCode))
+                        }
+                    )
+                }
+                composable<Routes.CountryDetail> { backStackEntry ->
+                    val args: Routes.CountryDetail = backStackEntry.toRoute()
+                    // CountryDetailScreen(isoCode = args.isoCode)
                 }
             }
         }
