@@ -10,6 +10,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.piotrbahlaj.globeboard.core.navigation.Routes
+import com.piotrbahlaj.globeboard.features.countryDetail.presentation.CountryDetailScreen
 import com.piotrbahlaj.globeboard.features.explorer.presentation.ExplorerListScreen
 
 @Composable
@@ -35,7 +36,7 @@ fun App() {
                 }
                 composable<Routes.CountryDetail> { backStackEntry ->
                     val args: Routes.CountryDetail = backStackEntry.toRoute()
-                    // CountryDetailScreen(isoCode = args.isoCode)
+                    CountryDetailScreen(isoCode = args.isoCode)
                 }
             }
         }
