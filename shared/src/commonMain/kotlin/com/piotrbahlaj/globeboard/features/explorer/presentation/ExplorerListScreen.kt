@@ -12,8 +12,8 @@ import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.piotrbahlaj.globeboard.common.countries.data.models.Country
 import com.piotrbahlaj.globeboard.core.constants.Constants
+import com.piotrbahlaj.globeboard.features.explorer.presentation.ui.CountryRow
 import org.koin.compose.viewmodel.koinViewModel
 
 @Composable
@@ -70,17 +70,3 @@ fun ExplorerListScreen(
 
 }
 
-@Composable
-private fun CountryRow(
-    country: Country,
-    onClick: () -> Unit
-) {
-    Column(
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(8.dp)
-    ) {
-        Text(text = country.name)
-        Text(text = country.capital ?: "N/A")
-    }
-}
