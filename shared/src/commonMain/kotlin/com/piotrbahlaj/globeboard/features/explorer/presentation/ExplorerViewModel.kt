@@ -19,7 +19,7 @@ class ExplorerViewModel(
     private val _errorMessage = MutableStateFlow<String?>(null)
     private val _searchQuery = MutableStateFlow("")
     val searchQuery: StateFlow<String> = _searchQuery.asStateFlow()
-
+    
     @OptIn(FlowPreview::class)
     val uiState: StateFlow<ExplorerUiState> = combine(
         _allCountries,

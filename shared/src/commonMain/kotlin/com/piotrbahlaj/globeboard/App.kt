@@ -1,43 +1,37 @@
 package com.piotrbahlaj.globeboard
 
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
-import androidx.navigation.compose.NavHost
-import androidx.navigation.compose.composable
+import androidx.compose.runtime.*
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
-import com.piotrbahlaj.globeboard.core.navigation.Routes
-import com.piotrbahlaj.globeboard.features.explorer.presentation.ExplorerListScreen
+import com.piotrbahlaj.globeboard.core.navigation.AppNavHost
+import com.piotrbahlaj.globeboard.core.navigation.BottomNavBar
+import com.piotrbahlaj.globeboard.core.navigation.shouldShowBottomBar
+import com.piotrbahlaj.globeboard.core.theme.GlobeBoardTheme
+
 
 @Composable
 fun App() {
-    MaterialTheme {
-        val navController = rememberNavController()
+    var isDarkTheme by remember { mutableStateOf(false) }
 
-        Scaffold { innerPadding ->
-            NavHost(
-                navController = navController,
-                startDestination = Routes.ExplorerList,
-                modifier = Modifier.padding(innerPadding)
-            ) {
-                composable<Routes.Dashboard> {
-                    // DashboardScreen
-                }
-                composable<Routes.ExplorerList> {
-                    ExplorerListScreen(
-                        onCountryClick = { isoCode ->
-                            navController.navigate(Routes.CountryDetail(isoCode))
-                        }
-                    )
-                }
-                composable<Routes.CountryDetail> { backStackEntry ->
-                    val args: Routes.CountryDetail = backStackEntry.toRoute()
-                    // CountryDetailScreen(isoCode = args.isoCode)
+    GlobeBoardTheme(darkTheme = isDarkTheme) {
+        val navController = rememberNavController()
+        val backStackEntry by navController.currentBackStackEntryAsState()
+        val currentDestination = backStackEntry?.destination
+
+        Scaffold(
+            bottomBar = {
+                if (shouldShowBottomBar(currentDestination)) {
+                    BottomNavBar(navController, currentDestination)
                 }
             }
+        ) { innerPadding ->
+            AppNavHost(
+                navController = navController,
+                topPadding = innerPadding.calculateTopPadding(),
+                isDarkTheme = isDarkTheme,
+                onToggleTheme = { isDarkTheme = !isDarkTheme }
+            )
         }
     }
 }
