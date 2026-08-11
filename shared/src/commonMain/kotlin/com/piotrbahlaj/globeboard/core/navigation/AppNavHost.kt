@@ -44,7 +44,7 @@ fun AppNavHost(
         }
         composable<Routes.CountryDetail> { backStackEntry ->
             val args: Routes.CountryDetail = backStackEntry.toRoute()
-            CountryDetailScreen(isoCode = args.isoCode)
+            CountryDetailScreen(isoCode = args.isoCode, onBackClick = { navController.popBackStack() })
         }
     }
 }
