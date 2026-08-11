@@ -57,8 +57,8 @@ fun BottomNavBar(
                     popUpTo(Routes.Dashboard)
                 }
             },
-            icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
-            label = { Text("Settings") }
+            icon = { Icon(Icons.Default.Settings, contentDescription = Constants.SETTINGS) },
+            label = { Text(Constants.SETTINGS) }
         )
     }
 }
