@@ -11,11 +11,14 @@ import androidx.navigation.toRoute
 import com.piotrbahlaj.globeboard.features.countryDetail.presentation.CountryDetailScreen
 import com.piotrbahlaj.globeboard.features.dashboard.presentation.DashboardScreen
 import com.piotrbahlaj.globeboard.features.explorer.presentation.ExplorerListScreen
+import com.piotrbahlaj.globeboard.features.settings.presentation.SettingsScreen
 
 @Composable
 fun AppNavHost(
     navController: NavHostController,
     topPadding: Dp,
+    isDarkTheme: Boolean,
+    onToggleTheme: () -> Unit,
 ) {
     NavHost(
         navController = navController,
@@ -35,6 +38,9 @@ fun AppNavHost(
                     navController.navigate(Routes.CountryDetail(isoCode))
                 }
             )
+        }
+        composable<Routes.Settings> {
+            SettingsScreen(isDarkTheme = isDarkTheme, onToggleTheme = onToggleTheme)
         }
         composable<Routes.CountryDetail> { backStackEntry ->
             val args: Routes.CountryDetail = backStackEntry.toRoute()

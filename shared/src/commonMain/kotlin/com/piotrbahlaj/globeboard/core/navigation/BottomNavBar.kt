@@ -1,8 +1,13 @@
 package com.piotrbahlaj.globeboard.core.navigation
 
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.only
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Home
 import androidx.compose.material.icons.filled.Search
+import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material3.Icon
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
@@ -19,7 +24,9 @@ fun BottomNavBar(
     navController: NavHostController,
     currentDestination: NavDestination?,
 ) {
-    NavigationBar {
+    NavigationBar(
+        windowInsets = WindowInsets.navigationBars.only(WindowInsetsSides.Bottom)
+    ) {
         NavigationBarItem(
             selected = currentDestination?.hierarchy?.any { it.hasRoute(Routes.Dashboard::class) } == true,
             onClick = {
@@ -27,9 +34,12 @@ fun BottomNavBar(
                     popUpTo(Routes.Dashboard) { inclusive = true }
                 }
             },
+
             icon = { Icon(Icons.Default.Home, contentDescription = Constants.DASHBOARD) },
-            label = { Text(Constants.DASHBOARD) }
-        )
+            label = { Text(Constants.DASHBOARD) },
+
+
+            )
         NavigationBarItem(
             selected = currentDestination?.hierarchy?.any { it.hasRoute(Routes.ExplorerList::class) } == true,
             onClick = {
@@ -40,11 +50,21 @@ fun BottomNavBar(
             icon = { Icon(Icons.Default.Search, contentDescription = Constants.EXPLORER) },
             label = { Text(Constants.EXPLORER) }
         )
+        NavigationBarItem(
+            selected = currentDestination?.hierarchy?.any { it.hasRoute(Routes.Settings::class) } == true,
+            onClick = {
+                navController.navigate(Routes.Settings) {
+                    popUpTo(Routes.Dashboard)
+                }
+            },
+            icon = { Icon(Icons.Default.Settings, contentDescription = "Settings") },
+            label = { Text("Settings") }
+        )
     }
 }
 
 fun shouldShowBottomBar(currentDestination: NavDestination?): Boolean {
     return currentDestination?.hierarchy?.any {
-        it.hasRoute(Routes.Dashboard::class) || it.hasRoute(Routes.ExplorerList::class)
+        it.hasRoute(Routes.Dashboard::class) || it.hasRoute(Routes.ExplorerList::class) || it.hasRoute(Routes.Settings::class)
     } == true
 }

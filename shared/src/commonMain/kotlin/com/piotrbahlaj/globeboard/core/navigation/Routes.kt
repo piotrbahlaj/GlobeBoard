@@ -11,4 +11,7 @@ sealed interface Routes {
 
     @Serializable
     data class CountryDetail(val isoCode: String) : Routes
+
+    @Serializable
+    data object Settings : Routes
 }

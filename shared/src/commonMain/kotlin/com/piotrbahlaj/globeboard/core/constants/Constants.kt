@@ -10,4 +10,8 @@ object Constants {
     const val POPULATION = "Population"
     const val DASHBOARD = "Dashboard"
     const val EXPLORER = "Explorer"
+    const val TOGGLE_THEME = "Toggle Theme"
+    const val SETTINGS = "Settings"
+    const val DASHBOARD_HEADER_1 = "Welcome to"
+    const val DASHBOARD_HEADER_2 = "GlobeBoard"
 }
