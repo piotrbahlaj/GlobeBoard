@@ -19,9 +19,9 @@ Data comes from the free, keyless [countries.dev](https://countries.dev) REST AP
 The project follows a pragmatic, simplified Clean Architecture, structured into three top-level packages inside the
 shared module:
 
-- **`core`** 0 main app infrastructure: network client setup, dependency injection modules,
+- **`core`** - main app infrastructure: network client setup, dependency injection modules,
   navigation graph, theming, and shared constants/utilities.
-- **`common`** 0 logic and data shared across multiple features (currently: everything related to `Country` - the
+- **`common`** - logic and data shared across multiple features (currently: everything related to `Country` - the
   API service, repository, and its domain interface).
 - **`features`** - one package per screen (`dashboard`, `explorer`, `countryDetail`, `settings`), each with its own
   `presentation` layer (ViewModel + Composable screen + small UI-only components).
